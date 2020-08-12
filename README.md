@@ -1,9 +1,10 @@
 # vlche/nginx-waf-certbot
 Docker alpine based container providing [nginx](https://www.nginx.com) with [modsecurity](https://www.modsecurity.org), [lua](https://www.nginx.com/resources/wiki/modules/lua/) and certbot for [Let's Encrypt](https://letsencrypt.org) SSL certificates
 Inspired by [Really](https://hub.docker.com/r/really/nginx-modsecurity)
+
 [![](https://images.microbadger.com/badges/image/vlche/nginx-waf-certbot.svg)](https://microbadger.com/images/vlche/nginx-waf-certbot "Get your own image badge on microbadger.com") 
 [![GitHub issues](https://img.shields.io/github/issues/vlche/docker-nginx-waf.svg?style=flat-square)](https://github.com/vlche/docker-nginx-waf/issues) 
-[![GitHub license](https://img.shields.io/github/license/vlche/docker-nginx.svg?style=flat-square)](https://github.com/vlche/docker-nginx-waf/blob/master/LICENSE) 
+[![GitHub license](https://img.shields.io/github/license/vlche/docker-nginx-waf.svg?style=flat-square)](https://github.com/vlche/docker-nginx-waf/blob/master/LICENSE) 
 [![Docker Pulls](https://img.shields.io/docker/pulls/vlche/docker-nginx-waf.svg?style=flat-square)](https://github.com/vlche/docker-nginx-waf/)
 
 Launch nginx using the default config:
