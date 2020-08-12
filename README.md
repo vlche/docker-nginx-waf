@@ -5,7 +5,7 @@ Inspired by [Really](https://hub.docker.com/r/really/nginx-modsecurity)
 [![](https://images.microbadger.com/badges/image/vlche/nginx-waf-certbot.svg)](https://microbadger.com/images/vlche/nginx-waf-certbot "Get your own image badge on microbadger.com") 
 [![GitHub issues](https://img.shields.io/github/issues/vlche/docker-nginx-waf.svg?style=flat-square)](https://github.com/vlche/docker-nginx-waf/issues) 
 [![GitHub license](https://img.shields.io/github/license/vlche/docker-nginx-waf.svg?style=flat-square)](https://github.com/vlche/docker-nginx-waf/blob/master/LICENSE) 
-[![Docker Pulls](https://img.shields.io/docker/pulls/vlche/nginx-waf-certbot.svg?style=flat-square)](https://github.com/vlche/docker-nginx-waf/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/vlche/nginx-waf-certbot.svg?style=flat-square)](https://hub.docker.com/vlche/nginx-waf-certbot/)
 
 Launch nginx using the default config:
 ```
