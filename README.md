@@ -10,12 +10,12 @@ Additionally preconfigured options are:
 
 Inspired by [Troy Kelly](https://hub.docker.com/r/really/nginx-modsecurity)
 
-[![Docker Automated build](https://img.shields.io/docker/automated/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
-[![Docker Build Status](https://img.shields.io/docker/build/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
+[![Docker Automated build](https://img.shields.io/docker/cloud/automated/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
 [![GitHub issues](https://img.shields.io/github/issues/vlche/docker-nginx-waf.svg?style=for-the-badge)](https://github.com/vlche/docker-nginx-waf/issues) 
 [![GitHub license](https://img.shields.io/github/license/vlche/docker-nginx-waf.svg?style=for-the-badge)](https://github.com/vlche/docker-nginx-waf/blob/master/LICENSE) 
 [![Docker Pulls](https://img.shields.io/docker/pulls/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
-[![MicroBadger Size](https://img.shields.io/microbadger/image-size/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/)
+[![MicroBadger Size](https://img.shields.io/docker/image-size/vlche/nginx-waf-certbot/latest.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/)
 
 Launch nginx using the default config:
 ```
