@@ -1,7 +1,14 @@
 # vlche/nginx-waf-certbot
-Docker alpine based container providing [nginx](https://www.nginx.com) with [modsecurity](https://www.modsecurity.org), [lua](https://www.nginx.com/resources/wiki/modules/lua/) and certbot for [Let's Encrypt](https://letsencrypt.org) SSL certificates.
+Docker alpine based container providing [nginx](https://www.nginx.com) with [modsecurity](https://www.modsecurity.org) and certbot for [Let's Encrypt](https://letsencrypt.org)'s SSL certificates.
+Additionally preconfigured options are:
 
-Inspired by [Really](https://hub.docker.com/r/really/nginx-modsecurity)
+[lua](https://www.nginx.com/resources/wiki/modules/lua/) 
+
+[brotli](https://github.com/google/brotli) 
+
+[Optimized intermediate ssl settings. General-purpose servers with a variety of clients, recommended for almost all systems](https://ssl-config.mozilla.org/) 
+
+Inspired by [Troy Kelly](https://hub.docker.com/r/really/nginx-modsecurity)
 
 [![Docker Automated build](https://img.shields.io/docker/automated/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
 [![Docker Build Status](https://img.shields.io/docker/build/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
