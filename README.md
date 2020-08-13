@@ -1,5 +1,6 @@
 # vlche/nginx-waf-certbot
-Docker alpine based container providing [nginx](https://www.nginx.com) with [modsecurity](https://www.modsecurity.org), [lua](https://www.nginx.com/resources/wiki/modules/lua/) and certbot for [Let's Encrypt](https://letsencrypt.org) SSL certificates
+Docker alpine based container providing [nginx](https://www.nginx.com) with [modsecurity](https://www.modsecurity.org), [lua](https://www.nginx.com/resources/wiki/modules/lua/) and certbot for [Let's Encrypt](https://letsencrypt.org) SSL certificates.
+
 Inspired by [Really](https://hub.docker.com/r/really/nginx-modsecurity)
 
 [![](https://images.microbadger.com/badges/image/vlche/nginx-waf-certbot.svg)](https://microbadger.com/images/vlche/nginx-waf-certbot "Get your own image badge on microbadger.com") 
