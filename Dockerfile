@@ -137,7 +137,7 @@ RUN apk add --no-cache --virtual .build-deps \
   cd / && \
   apk del .build-deps && \
   rm -rf ${WORKING_DIR} && \
-  unset ${WORKING_DIR}
+  unset ${WORKING_DIR} && \
   rm -f /usr/local/nginx/sbin/nginx && \
   rm /etc/nginx/conf.d/default.conf && \
   echo "add modsecurity dependency, certbot & openssl" && \
