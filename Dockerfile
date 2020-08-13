@@ -149,9 +149,10 @@ RUN export WORKING_DIR="/src" && \
   rm /etc/nginx/conf.d/default.conf && \
   #
   echo "adding modsecurity dependency, certbot & openssl..." && \
-  apk add --no-cache libstdc++ yajl libmaxminddb certbot luajit openssl && \
+  apk add --no-cache libstdc++ yajl libmaxminddb luajit openssl && \
   #
-  echo "updating certbot..." && \
+  echo "installing certbot..." && \
+  apk add --no-cache python3 py3-cffi py3-cryptography && \
   pip3 install --no-cache-dir certbot-nginx && \
   echo -e "#!/usr/bin/env sh\n\nif [ -f "/usr/bin/certbot" ]; then\n  /usr/bin/certbot renew\nfi\n" > /etc/periodic/daily/certrenew && \
   chmod 755 /etc/periodic/daily/certrenew
