@@ -54,6 +54,7 @@ RUN apk add --no-cache --virtual .build-deps \
   mkdir ${WORKING_DIR} && cd ${WORKING_DIR} && \
   git clone --depth 1 -b v${MODSECURITY_VERSION}/master --single-branch https://github.com/SpiderLabs/ModSecurity && \
   git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git && \
+  git clone --recursive https://github.com/google/ngx_brotli.git && \
   wget -qO modsecurity.conf https://raw.githubusercontent.com/SpiderLabs/ModSecurity/v${MODSECURITY_VERSION}/master/modsecurity.conf-recommended && \
   wget -qO unicode.mapping  https://raw.githubusercontent.com/SpiderLabs/ModSecurity/49495f1925a14f74f93cb0ef01172e5abc3e4c55/unicode.mapping && \
   wget -qO - https://github.com/coreruleset/coreruleset/archive/v${OWASPCRS_VERSION}.tar.gz | tar xzf  - -C ${WORKING_DIR} && \
@@ -74,9 +75,13 @@ RUN apk add --no-cache --virtual .build-deps \
 #  CONFARGS=$(nginx -V 2>&1 | sed -n -e 's/^.*arguments: //p') && \
   MODSECURITYDIR="$(pwd)/ModSecurity-nginx" && \
   cd ./nginx-$NGINX_VERSION && \
-  ./configure --with-compat $CONFARGS --add-dynamic-module=$MODSECURITYDIR && \
+  ./configure --with-compat $CONFARGS \
+    --add-dynamic-module=$MODSECURITYDIR \
+    --add-dynamic-module=${WORKING_DIR}/ngx_brotli && \
   make modules && \
   cp objs/ngx_http_modsecurity_module.so /usr/lib/nginx/modules && \
+  cp objs/ngx_http_brotli_filter_module.so /usr/lib/nginx/modules && \
+  cp objs/ngx_http_brotli_static_module.so /usr/lib/nginx/modules && \
   echo "configure modsecurity" && \
   mkdir -p /etc/nginx/modsec/conf.d && \
   echo "# Example placeholder" > /etc/nginx/modsec/conf.d/example.conf && \

@@ -10,7 +10,8 @@ else
 fi
 
 if [ ! -f "/etc/ssl/dhparam.pem" ]; then
-  /usr/bin/openssl dhparam -out /etc/ssl/dhparam.pem 2048
+#  /usr/bin/openssl dhparam -out /etc/ssl/dhparam.pem 2048
+  curl https://ssl-config.mozilla.org/ffdhe2048.txt > /etc/ssl/dhparam.pem
   echo "Done"
 fi
 
