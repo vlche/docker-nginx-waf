@@ -112,9 +112,11 @@ RUN apk add --no-cache --virtual .build-deps \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-931-APPLICATION-ATTACK-RFI.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-932-APPLICATION-ATTACK-RCE.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-933-APPLICATION-ATTACK-PHP.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
+  echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-934-APPLICATION-ATTACK-NODEJS.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-943-APPLICATION-ATTACK-SESSION-FIXATION.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
+  echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-944-APPLICATION-ATTACK-JAVA.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-949-BLOCKING-EVALUATION.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/RESPONSE-950-DATA-LEAKAGES.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/RESPONSE-951-DATA-LEAKAGES-SQL.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
