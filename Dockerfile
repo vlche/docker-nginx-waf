@@ -51,13 +51,13 @@ RUN apk add --no-cache --virtual .build-deps \
 # modsecurity dependencies
   libtool autoconf automake yajl-dev curl-dev libmaxminddb-dev && \
   echo "Downloading sources..." && \
-  mkdir /src && cd /src && \
+  mkdir ${WORKING_DIR} && cd ${WORKING_DIR} && \
   git clone --depth 1 -b v${MODSECURITY_VERSION}/master --single-branch https://github.com/SpiderLabs/ModSecurity && \
   git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git && \
   wget -qO modsecurity.conf https://raw.githubusercontent.com/SpiderLabs/ModSecurity/v${MODSECURITY_VERSION}/master/modsecurity.conf-recommended && \
   wget -qO unicode.mapping  https://raw.githubusercontent.com/SpiderLabs/ModSecurity/49495f1925a14f74f93cb0ef01172e5abc3e4c55/unicode.mapping && \
-  wget -qO - https://github.com/coreruleset/coreruleset/archive/v${OWASPCRS_VERSION}.tar.gz | tar xzf  - -C /src && \
-  wget -qO - https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar xzf  - -C /src && \
+  wget -qO - https://github.com/coreruleset/coreruleset/archive/v${OWASPCRS_VERSION}.tar.gz | tar xzf  - -C ${WORKING_DIR} && \
+  wget -qO - https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar xzf  - -C ${WORKING_DIR} && \
   echo "build modsecurity" && \
   cd ModSecurity && \
   git submodule init && \
@@ -70,7 +70,7 @@ RUN apk add --no-cache --virtual .build-deps \
   rm /usr/local/modsecurity/lib/libmodsecurity.a && \
   strip /usr/local/modsecurity/lib/libmodsecurity.so && \
   echo "build nginx modules" && \
-  cd /src && \
+  cd ${WORKING_DIR} && \
 #  CONFARGS=$(nginx -V 2>&1 | sed -n -e 's/^.*arguments: //p') && \
   MODSECURITYDIR="$(pwd)/ModSecurity-nginx" && \
   cd ./nginx-$NGINX_VERSION && \
@@ -125,26 +125,26 @@ RUN apk add --no-cache --virtual .build-deps \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/RESPONSE-980-CORRELATION.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
   echo "include /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf" >> /etc/nginx/modsec/modsec_includes.conf && \
 
-  mv /src/unicode.mapping /etc/nginx/modsec && \
-  mv /src/modsecurity.conf /etc/nginx/modsec && \
+  mv ${WORKING_DIR}/unicode.mapping /etc/nginx/modsec && \
+  mv ${WORKING_DIR}/modsecurity.conf /etc/nginx/modsec && \
   sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/g' /etc/nginx/modsec/modsecurity.conf && \
   sed -i 's!SecAuditLog /var/log/modsec_audit.log!SecAuditLog /var/log/nginx/modsec_audit.log!g' /etc/nginx/modsec/modsecurity.conf && \
-  mv /src/coreruleset-${OWASPCRS_VERSION} /usr/local/ && \
+  mv ${WORKING_DIR}/coreruleset-${OWASPCRS_VERSION} /usr/local/ && \
   mv /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf && \
   mv /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example /usr/local/coreruleset-${OWASPCRS_VERSION}/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf && \
   mv /usr/local/coreruleset-${OWASPCRS_VERSION}/crs-setup.conf.example /usr/local/coreruleset-${OWASPCRS_VERSION}/crs-setup.conf && \
   echo "clean all after build" && \
   cd / && \
   apk del .build-deps && \
-  rm -rf /src && \
+  rm -rf ${WORKING_DIR} && \
+  unset ${WORKING_DIR}
   rm -f /usr/local/nginx/sbin/nginx && \
   rm /etc/nginx/conf.d/default.conf && \
   echo "add modsecurity dependency, certbot & openssl" && \
-  apk add libstdc++ yajl libmaxminddb certbot luajit openssl && \
+  apk add --no-cache libstdc++ yajl libmaxminddb certbot luajit openssl && \
   pip3 install --no-cache-dir certbot-nginx && \
   echo -e "#!/usr/bin/env sh\n\nif [ -f "/usr/bin/certbot" ]; then\n  /usr/bin/certbot renew\nfi\n" > /etc/periodic/daily/certrenew && \
-  chmod 755 /etc/periodic/daily/certrenew && \
-  rm -rf /var/cache/apk/*
+  chmod 755 /etc/periodic/daily/certrenew
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY default.conf /etc/nginx/conf.d/default.conf
