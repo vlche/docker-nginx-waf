@@ -9,6 +9,11 @@ else
     exec 3>/dev/null
 fi
 
+if [ ! -f "/etc/ssl/dhparam.pem" ]; then
+  /usr/bin/openssl dhparam -out /etc/ssl/dhparam.pem 2048
+  echo "Done"
+fi
+
 if [ -f "/usr/sbin/crond" ]; then
   /usr/sbin/crond -b -S -l 2
 fi
