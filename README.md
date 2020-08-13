@@ -3,10 +3,12 @@ Docker alpine based container providing [nginx](https://www.nginx.com) with [mod
 
 Inspired by [Really](https://hub.docker.com/r/really/nginx-modsecurity)
 
-[![](https://images.microbadger.com/badges/image/vlche/nginx-waf-certbot.svg)](https://microbadger.com/images/vlche/nginx-waf-certbot "Get your own image badge on microbadger.com") 
-[![GitHub issues](https://img.shields.io/github/issues/vlche/docker-nginx-waf.svg?style=flat-square)](https://github.com/vlche/docker-nginx-waf/issues) 
-[![GitHub license](https://img.shields.io/github/license/vlche/docker-nginx-waf.svg?style=flat-square)](https://github.com/vlche/docker-nginx-waf/blob/master/LICENSE) 
-[![Docker Pulls](https://img.shields.io/docker/pulls/vlche/nginx-waf-certbot.svg?style=flat-square)](https://hub.docker.com/vlche/nginx-waf-certbot/)
+[![Docker Automated build](https://img.shields.io/docker/automated/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
+[![Docker Build Status](https://img.shields.io/docker/build/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
+[![GitHub issues](https://img.shields.io/github/issues/vlche/docker-nginx-waf.svg?style=for-the-badge)](https://github.com/vlche/docker-nginx-waf/issues) 
+[![GitHub license](https://img.shields.io/github/license/vlche/docker-nginx-waf.svg?style=for-the-badge)](https://github.com/vlche/docker-nginx-waf/blob/master/LICENSE) 
+[![Docker Pulls](https://img.shields.io/docker/pulls/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
+[![MicroBadger Size](https://img.shields.io/microbadger/image-size/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/)
 
 Launch nginx using the default config:
 ```

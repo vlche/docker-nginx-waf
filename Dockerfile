@@ -17,7 +17,7 @@ ARG VCS_REF
 ARG VERSION
 ARG MODSECURITY_VERSION
 ARG OWASPCRS_VERSION
-LABEL maintainer=https://github.com/vlche \
+LABEL maintainer="Vladimir Che <https://github.com/vlche>" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="NGINX with ModSecurity, Certbot and lua support" \
       org.label-schema.description="Provides nginx ${NGINX_VERSION} with ModSecurity v${MODSECURITY_VERSION} (OWASP ModSecurity Core Rule Set CRS ${OWASPCRS_VERSION}) and lua support for certbot --nginx. Using Python for Let's Encrypt Certbot" \
