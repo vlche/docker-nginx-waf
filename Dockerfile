@@ -3,7 +3,7 @@ FROM nginx:alpine
 MAINTAINER Vladimir Che <vl.che@ncube.cloud>
 
 # nginx:alpine contains NGINX_VERSION environment variable, like so:
-# ENV NGINX_VERSION 1.19.1
+# ENV NGINX_VERSION 1.19.2
 
 # MODSECURITY version
 ENV VERSION=${NGINX_VERSION} \
@@ -16,10 +16,10 @@ ARG VCS_REF
 ARG VERSION
 ARG MODSECURITY_VERSION
 ARG OWASPCRS_VERSION
-LABEL maintainer="Vladimir Che <https://github.com/vlche>" \
+LABEL maintainer="Vladimir Che <vl.che@ncube.cloud>" \
       org.label-schema.build-date=$BUILD_DATE \
-      org.label-schema.name="NGINX with ModSecurity, Certbot and lua support" \
-      org.label-schema.description="Provides nginx ${NGINX_VERSION} with ModSecurity v${MODSECURITY_VERSION} (OWASP ModSecurity Core Rule Set CRS ${OWASPCRS_VERSION}) and lua support for certbot --nginx. Using Python for Let's Encrypt Certbot" \
+      org.label-schema.name="NGINX with ModSecurity, Brotli, Certbot and lua support" \
+      org.label-schema.description="Provides nginx ${NGINX_VERSION} with ModSecurity v${MODSECURITY_VERSION} (OWASP ModSecurity CRS ${OWASPCRS_VERSION}) and lua support for certbot --nginx. Using Python for Let's Encrypt Certbot" \
       org.label-schema.url="https://ncube.cloud/about/opensource" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/vlche/docker-nginx-waf" \
@@ -30,26 +30,30 @@ LABEL maintainer="Vladimir Che <https://github.com/vlche>" \
 # For latest build deps, see https://github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile
 RUN export WORKING_DIR="/src" && \
   apk add --no-cache --virtual .build-deps \
-  gcc \
-  libc-dev \
-  make \
-  openssl-dev \
-  pcre-dev \
-  zlib-dev \
-  linux-headers \
-  perl-dev \
-  libedit-dev \
-  mercurial \
-  bash \
-  alpine-sdk \
-  findutils \
-  curl \
-  gnupg \
-  libxslt-dev \
-  gd-dev \
-  geoip-dev \
+    gcc \
+    libc-dev \
+    make \
+    openssl-dev \
+    pcre-dev \
+    zlib-dev \
+    linux-headers \
+    libxslt-dev \
+    gd-dev \
+    geoip-dev \
+    perl-dev \
+    libedit-dev \
+    mercurial \
+    bash \
+    alpine-sdk \
+    findutils \
   # modsecurity dependencies
-  libtool autoconf automake yajl-dev curl-dev libmaxminddb-dev && \
+    autoconf \
+    automake \
+    curl \
+    curl-dev \
+    libmaxminddb-dev \
+    libtool \
+    yajl-dev && \
   #
   echo "Downloading sources..." && \
   mkdir ${WORKING_DIR} && cd ${WORKING_DIR} && \
@@ -152,18 +156,18 @@ RUN export WORKING_DIR="/src" && \
   apk add --no-cache libstdc++ yajl libmaxminddb luajit openssl && \
   #
   echo "installing certbot..." && \
-  apk add --no-cache python3 py3-cffi py3-cryptography && \
+  apk add --no-cache py3-pip py3-cffi py3-cryptography && \
   pip3 install --no-cache-dir certbot-nginx && \
   echo -e "#!/usr/bin/env sh\n\nif [ -f "/usr/bin/certbot" ]; then\n  /usr/bin/certbot renew\nfi\n" > /etc/periodic/daily/certrenew && \
   chmod 755 /etc/periodic/daily/certrenew
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY default.conf /etc/nginx/conf.d/default.conf
-COPY certbot.default.sh /usr/local/sbin/
-COPY docker-entrypoint.sh /
+#COPY nginx.conf /etc/nginx/nginx.conf
+#COPY default.conf /etc/nginx/conf.d/default.conf
+#COPY certbot.default.sh /usr/local/sbin/
+#COPY docker-entrypoint.sh /
+COPY root /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443
 STOPSIGNAL SIGTERM
 CMD ["nginx", "-g", "daemon off;"]
