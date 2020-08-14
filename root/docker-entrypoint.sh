@@ -15,6 +15,14 @@ if [ ! -f "/etc/ssl/dhparam.pem" ]; then
   echo "Done"
 fi
 
+# fix of certbot's permissions
+if [ -d /etc/letsencrypt/live ]; then
+    chmod o+rx /etc/letsencrypt/archive
+    chmod o+rx /etc/letsencrypt/live
+    chown .nginx /etc/letsencrypt/live/*/privkey.pem
+    chmod g+r /etc/letsencrypt/live/*/privkey.pem
+fi
+
 if [ -f "/usr/sbin/crond" ]; then
   /usr/sbin/crond -b -S -l 2
 fi

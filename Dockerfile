@@ -49,7 +49,6 @@ RUN export WORKING_DIR="/src" && \
   # modsecurity dependencies
     autoconf \
     automake \
-    curl \
     curl-dev \
     libmaxminddb-dev \
     libtool \
