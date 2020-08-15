@@ -23,6 +23,12 @@ if [ -d /etc/letsencrypt/live ]; then
     chmod g+r /etc/letsencrypt/live/*/privkey.pem
 fi
 
+if [ ! -z "${TZ}" ]; then
+    if [ -f /usr/share/zoneinfo/${TZ} ]; then
+        ln -s /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
+    fi
+fi
+
 if [ -f "/usr/sbin/crond" ]; then
   /usr/sbin/crond -b -S -l 2
 fi
