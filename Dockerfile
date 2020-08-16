@@ -168,8 +168,8 @@ RUN export WORKING_DIR="/src" && \
 COPY root /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-HEALTHCHECK --interval=5m --timeout=5s \
- CMD wget --output-document=- --quiet --tries=1 http://127.0.0.1/
+#HEALTHCHECK --interval=5m --timeout=5s \
+# CMD wget --output-document=- --quiet --tries=1 http://127.0.0.1/
 EXPOSE 80 443
 STOPSIGNAL SIGTERM
 CMD ["nginx", "-g", "daemon off;"]
