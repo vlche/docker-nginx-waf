@@ -49,7 +49,9 @@ server
   # include letsencrypt endpoints to bypass proxy
   include /etc/nginx/snippets/letsencrypt.conf;
   # set proxy headers: X-Forwarded-Proto, Host, X-Forwarded-Host, X-Forwarded-For, X-Real-IP
-  include /etc/nginx/snippets/proxy.conf;
+  include /etc/nginx/snippets/proxy_headers.conf;
+  # add some CSRF headers
+  include /etc/nginx/snippets/policy_headers.conf;
 
   location /
   {
