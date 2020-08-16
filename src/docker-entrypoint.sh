@@ -34,9 +34,10 @@ if [ -f "/etc/nginx/snippets/resolver.conf" ]; then
     NS=$(cat /etc/resolv.conf|grep nameserver|head -n 1|cut -d' ' -f 2)
     sed -i 's/127.0.0.11/'${NS}'/' /etc/nginx/snippets/resolver.conf
 fi
-if [ -f "/usr/sbin/crond" ]; then
-  /usr/sbin/crond -b -S -l 2
-fi
+
+#if [ -f "/usr/sbin/crond" ]; then
+#  /usr/sbin/crond -b -S -l 2
+#fi
 
 if [ "$1" = "nginx" -o "$1" = "nginx-debug" ]; then
     if /usr/bin/find "/docker-entrypoint.d/" -mindepth 1 -maxdepth 1 -type f -print -quit 2>/dev/null | read v; then
