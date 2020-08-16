@@ -165,7 +165,7 @@ RUN export WORKING_DIR="/src" && \
 #COPY default.conf /etc/nginx/conf.d/default.conf
 #COPY certbot.default.sh /usr/local/sbin/
 #COPY docker-entrypoint.sh /
-COPY root /
+COPY src /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 #HEALTHCHECK --interval=5m --timeout=5s \
