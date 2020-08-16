@@ -25,6 +25,7 @@ fi
 
 if [ ! -z "${TZ}" ]; then
     if [ -f /usr/share/zoneinfo/${TZ} ]; then
+        if [ -f /etc/localtime ]; then rm -f /etc/localtime; fi
         ln -s /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
     fi
 fi
