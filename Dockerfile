@@ -68,6 +68,7 @@ RUN export WORKING_DIR="/src" && \
   cd ModSecurity && \
   git submodule init && git submodule update && \
   ./build.sh && ./configure && make -j$(nproc) && make install && \
+  #
   echo "delete modsecurity archive and strip libmodsecurity (~130mb + ~70mb)" && \
   rm /usr/local/modsecurity/lib/libmodsecurity.a && \
   strip /usr/local/modsecurity/lib/libmodsecurity.so && \
@@ -167,6 +168,8 @@ RUN export WORKING_DIR="/src" && \
 COPY root /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
+HEALTHCHECK --interval=5m --timeout=5s \
+ CMD wget --output-document=- --quiet --tries=1 http://127.0.0.1/
 EXPOSE 80 443
 STOPSIGNAL SIGTERM
 CMD ["nginx", "-g", "daemon off;"]
