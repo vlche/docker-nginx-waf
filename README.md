@@ -89,6 +89,8 @@ modsecurity_rules_file /etc/nginx/modsec/main.conf;
 include snippets/resolver.conf;
 # this one is whatever you say
 #resolver 8.8.8.8;
+
+include snippets/brotli.conf;
 ```
 
 Certbot
