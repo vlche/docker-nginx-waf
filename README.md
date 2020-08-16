@@ -74,11 +74,19 @@ server
 }
 ```
 
-If you have multiple server blocks, it is recommended to load ModSecurity rules file in http context, and then customize SecRules per endpoints, to ruduce memory footprint:
-/etc/nginx/conf.d/01-local.conf
+If you have multiple server blocks, it is recommended to load ModSecurity rules file in http context, and then customize SecRules per endpoints, to ruduce memory footprint.
+Example of /etc/nginx/conf.d/00-local.conf:
 ```
+# modsec is enabled for every server context.
+# If you want to enable it on a per server basis, please disable it here!
 modsecurity on;
 modsecurity_rules_file /etc/nginx/modsec/main.conf;
+
+# you should use reachable resolver for ssl stapling
+# this one is generated from /etc/resolv.conf's first nameserver
+include snippets/resolver.conf;
+# this one is whatever you say
+#resolver 8.8.8.8;
 ```
 
 Certbot
