@@ -112,6 +112,8 @@ include snippets/resolver.conf;
 #resolver 8.8.8.8;
 
 include snippets/brotli.conf;
+# increased for nextcloud like apps
+client_max_body_size 512m;
 ```
 
 Certbot
