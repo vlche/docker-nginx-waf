@@ -55,44 +55,88 @@ ModSecurity
 Pre-configured with rules from OWASP CRS on my default.
 If you want to disable it for a particular location simply set it to off
 ```
-server
-{
-  listen 80;
-  listen [::]:80;
-  listen 443 ssl http2;
-  listen [::]:443 ssl http2;
+upstream backend {
+    server 127.0.0.1:9000;
+}
 
-  server_name insecure.example.com;
+server {
+    listen       80;
+    #listen       [::]80;
+    server_name  insecure.example.com;
+    #listen 443 ssl http2;
+    #listen [::]:443 ssl http2;
 
-  set $upstream "http://10.0.0.1:9000";
+    #ssl_certificate /etc/letsencrypt/live/insecure.example.com/fullchain.pem; # managed by Certbot
+    #ssl_certificate_key /etc/letsencrypt/live/insecure.example.com/privkey.pem; # managed by Certbot
+    #ssl_trusted_certificate /etc/letsencrypt/live/insecure.example.com/chain.pem; # managed by Certbot
+    #ssl_stapling on; # managed by Certbot
+    #ssl_stapling_verify on; # managed by Certbot
 
-  # include letsencrypt endpoints to bypass proxy and be able to autoupdate:
-  include /etc/nginx/snippets/letsencrypt.conf;
-  # set proxy headers: X-Forwarded-Proto, Host, X-Forwarded-Host, X-Forwarded-For, X-Real-IP for upstreams:
-  include /etc/nginx/snippets/proxy_headers.conf;
-  # add some CSRF headers:
-  include /etc/nginx/snippets/policy_headers.conf;
+    #access_log  /var/log/nginx/host.access.log  main;
 
-  # disable modsecurity for / location:
-  location /
-  {
-    proxy_pass $upstream;
-    modsecurity off;
-  }
+    # modsec has already been enabled globally in 01-local.conf
+    #
+    #modsecurity on;
+    #modsecurity_rules_file /etc/nginx/modsec/main.conf;
 
-  # disable SecRule # 949110 for /api/ route:
-  location /api/
-  {
-    proxy_pass $upstream;
-    modsecurity_rules "SecRuleRemoveById 949110";
-  }
+    # include letsencrypt endpoints to bypass proxy and be able to autoupdate:
+    include snippets/letsencrypt.conf;
+    # add some CSRF headers:
+    include snippets/policy_headers.conf;
 
-  ssl_certificate /etc/letsencrypt/live/insecure.example.com/fullchain.pem; # managed by Certbot
-  ssl_certificate_key /etc/letsencrypt/live/insecure.example.com/privkey.pem; # managed by Certbot
+    location / {
+        root   /usr/share/nginx/html;
+    }
 
-  ssl_trusted_certificate /etc/letsencrypt/live/insecure.example.com/chain.pem; # managed by Certbot
-  ssl_stapling on; # managed by Certbot
-  ssl_stapling_verify on; # managed by Certbot
+    # serve static files with modsecurity disabled
+    #
+    #location /static/ {
+    #    modsecurity off;
+    #    root   /usr/share/nginx/html;
+    #}
+
+    # disable SecRule # 949110 for /api/ route:
+    #
+    #location /api/ {
+    # set proxy headers: X-Forwarded-Proto, Host, X-Forwarded-Host, X-Forwarded-For, X-Real-IP for upstreams:
+    #    include snippets/proxy_headers.conf;
+    #    proxy_pass $backend;
+    #    modsecurity_rules "SecRuleRemoveById 949110";
+    #}
+
+    # proxy requests to remote WebSockets backends for /ws/ route:
+    #
+    #location /ws/ {
+    # set proxy headers: X-Forwarded-Proto, Host, X-Forwarded-Host, X-Forwarded-For, X-Real-IP for upstreams,
+    # enable connection upgrade:
+    #    include snippets/proxy_headers_ws.conf;
+    #    proxy_pass $backend;
+    #}
+
+    # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+    #
+    #location ~ \.php$ {
+    # set proxy headers: X-Forwarded-Proto, Host, X-Forwarded-Host, X-Forwarded-For, X-Real-IP for upstreams:
+    #    include snippets/proxy_headers.conf;
+    #    proxy_pass   http://127.0.0.1;
+    #}
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    #location ~ \.php$ {
+    #    root           html;
+    #    fastcgi_pass   127.0.0.1:9000;
+    #    fastcgi_index  index.php;
+    #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+    #    include        fastcgi_params;
+    #}
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
 
 }
 ```
@@ -113,7 +157,16 @@ include snippets/resolver.conf;
 
 include snippets/brotli.conf;
 # increased for nextcloud like apps
-client_max_body_size 512m;
+client_max_body_size        512m;
+
+# define indexes here to reduce per vhost complexity
+index  index.html index.htm;
+
+# map to proxify WebSockets
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
 ```
 
 Certbot
