@@ -145,15 +145,15 @@ RUN export WORKING_DIR="/src" && \
   #
   echo "cleaning all after build..." && \
   cd / && \
+  #
+  echo "delete modsecurity archive and strip libmodsecurity (~130mb + ~70mb)" && \
+  rm /usr/local/modsecurity/lib/libmodsecurity.a && \
+  strip /usr/local/modsecurity/lib/libmodsecurity.so && \
   apk del .build-deps && \
   rm -rf ${WORKING_DIR} && \
   unset WORKING_DIR && \
   rm -f /usr/local/nginx/sbin/nginx && \
   rm /etc/nginx/conf.d/default.conf && \
-  #
-  echo "delete modsecurity archive and strip libmodsecurity (~130mb + ~70mb)" && \
-  rm /usr/local/modsecurity/lib/libmodsecurity.a && \
-  strip /usr/local/modsecurity/lib/libmodsecurity.so && \
   #
   echo "adding modsecurity dependency, certbot & openssl..." && \
   apk add --no-cache libstdc++ yajl libmaxminddb luajit openssl && \
