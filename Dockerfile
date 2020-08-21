@@ -7,7 +7,7 @@ MAINTAINER Vladimir Che <vl.che@ncube.cloud>
 
 # MODSECURITY version
 ENV VERSION=${NGINX_VERSION} \
-    MODSECURITY_VERSION=3 \
+    MODSECURITY_VERSION=3.0.4 \
     OWASPCRS_VERSION=3.3.0
 
 # Build-time metadata as defined at http://label-schema.org
@@ -56,10 +56,10 @@ RUN export WORKING_DIR="/src" && \
   #
   echo "Downloading sources..." && \
   mkdir ${WORKING_DIR} && cd ${WORKING_DIR} && \
-  git clone --depth 1 -b v${MODSECURITY_VERSION}/master --single-branch https://github.com/SpiderLabs/ModSecurity && \
+  git clone --depth 1 -b v${MODSECURITY_VERSION} --single-branch https://github.com/SpiderLabs/ModSecurity && \
   git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git && \
   git clone --recursive https://github.com/google/ngx_brotli.git && \
-  wget -qO modsecurity.conf https://raw.githubusercontent.com/SpiderLabs/ModSecurity/v${MODSECURITY_VERSION}/master/modsecurity.conf-recommended && \
+  wget -qO modsecurity.conf https://raw.githubusercontent.com/SpiderLabs/ModSecurity/v${MODSECURITY_VERSION}/modsecurity.conf-recommended && \
   wget -qO unicode.mapping  https://raw.githubusercontent.com/SpiderLabs/ModSecurity/49495f1925a14f74f93cb0ef01172e5abc3e4c55/unicode.mapping && \
   wget -qO - https://github.com/coreruleset/coreruleset/archive/v${OWASPCRS_VERSION}.tar.gz | tar xzf  - -C ${WORKING_DIR} && \
   wget -qO - https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar xzf  - -C ${WORKING_DIR} && \
