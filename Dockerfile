@@ -52,6 +52,7 @@ RUN export WORKING_DIR="/src" && \
     curl-dev \
     libmaxminddb-dev \
     libtool \
+    lmdb-dev \
     yajl-dev && \
   #
   echo "Downloading sources..." && \
@@ -69,20 +70,18 @@ RUN export WORKING_DIR="/src" && \
   git submodule init && git submodule update && \
   ./build.sh && ./configure && make -j$(nproc) && make install && \
   #
-  echo "delete modsecurity archive and strip libmodsecurity (~130mb + ~70mb)" && \
-  rm /usr/local/modsecurity/lib/libmodsecurity.a && \
-  strip /usr/local/modsecurity/lib/libmodsecurity.so && \
-  #
   echo "build nginx modules..." && \
   cd ${WORKING_DIR} && \
-  #  CONFARGS=$(nginx -V 2>&1 | sed -n -e 's/^.*arguments: //p') && \
+  CONFARGS=$(nginx -V 2>&1 | sed -n -e 's/^.*arguments: //p'| sed -e "s/--with-cc-opt='.*'//g") && \
   MODSECURITYDIR="$(pwd)/ModSecurity-nginx" && \
   cd ./nginx-$NGINX_VERSION && \
   ./configure --with-compat $CONFARGS \
+    --with-cc-opt='-Os -fomit-frame-pointer' \
     --add-dynamic-module=$MODSECURITYDIR \
     --add-dynamic-module=${WORKING_DIR}/ngx_brotli && \
   make modules && \
   strip objs/*.so && \
+  mkdir -p /usr/lib/nginx/modules && \
   cp objs/*.so /usr/lib/nginx/modules && \
   #
   echo "configuring modsecurity rules..." && \
@@ -151,6 +150,10 @@ RUN export WORKING_DIR="/src" && \
   unset WORKING_DIR && \
   rm -f /usr/local/nginx/sbin/nginx && \
   rm /etc/nginx/conf.d/default.conf && \
+  #
+  echo "delete modsecurity archive and strip libmodsecurity (~130mb + ~70mb)" && \
+  rm /usr/local/modsecurity/lib/libmodsecurity.a && \
+  strip /usr/local/modsecurity/lib/libmodsecurity.so && \
   #
   echo "adding modsecurity dependency, certbot & openssl..." && \
   apk add --no-cache libstdc++ yajl libmaxminddb luajit openssl && \
