@@ -162,6 +162,7 @@ include snippets/resolver.conf;
 # this one is whatever you say
 #resolver 8.8.8.8;
 
+include snippets/ssl.conf;
 include snippets/brotli.conf;
 # increased for nextcloud like apps
 client_max_body_size        512m;
