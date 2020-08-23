@@ -10,7 +10,6 @@ else
 fi
 
 if [ ! -f "/etc/ssl/dhparam.pem" ]; then
-#  /usr/bin/openssl dhparam -out /etc/ssl/dhparam.pem 2048
   curl https://ssl-config.mozilla.org/ffdhe2048.txt > /etc/ssl/dhparam.pem
   RES=$?
   # curl returned error, generate dhparams ourselves
@@ -39,9 +38,11 @@ if [ -f "/etc/nginx/snippets/resolver.conf" ]; then
     sed -i 's/127.0.0.11/'${NS}'/' /etc/nginx/snippets/resolver.conf
 fi
 
-#if [ -f "/usr/sbin/crond" ]; then
-#  /usr/sbin/crond -b -S -l 2
-#fi
+if [ ! -z "${CRON}" ]; then
+  if [ -f "/usr/sbin/crond" ]; then
+    /usr/sbin/crond -b -S -l 2
+  fi
+fi
 
 if [ "$1" = "nginx" -o "$1" = "nginx-debug" ]; then
     if /usr/bin/find "/docker-entrypoint.d/" -mindepth 1 -maxdepth 1 -type f -print -quit 2>/dev/null | read v; then
