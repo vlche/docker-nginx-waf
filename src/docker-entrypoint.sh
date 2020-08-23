@@ -18,7 +18,7 @@ if [ ! -f "/etc/ssl/dhparam.pem" ]; then
   echo "Done"
 fi
 
-# fix of certbot's permissions
+# fix Let's Encrypt's key files permissions
 if [ -d /etc/letsencrypt/live ]; then
     chmod o+rx /etc/letsencrypt/archive
     chmod o+rx /etc/letsencrypt/live

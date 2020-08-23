@@ -43,6 +43,7 @@ docker run --name nginx-waf \
 ...
   vlche/nginx-waf
 ```
+_or_
 To run certbot's cron updater as a separate container set WAF_INSTANCE variable to match your nginx-waf instance:
 ```
 docker run --name nginx-waf-cron \
@@ -162,6 +163,7 @@ include snippets/resolver.conf;
 # this one is whatever you say
 #resolver 8.8.8.8;
 
+include snippets/log.conf;
 include snippets/ssl.conf;
 include snippets/brotli.conf;
 # increased for nextcloud like apps
