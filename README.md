@@ -1,4 +1,4 @@
-# vlche/nginx-waf-certbot
+# vlche/nginx-waf
 Docker alpine based container providing [nginx](https://www.nginx.com) with [modsecurity](https://www.modsecurity.org) and certbot for [Let's Encrypt](https://letsencrypt.org)'s SSL certificates.
 You can use  as all-in-one service, or as SSL/Load-Balancer in frontend and WAF as a backend/backends.
 Additionally preconfigured options are:
@@ -17,12 +17,12 @@ Preconfigured optimized http headers are included and enabled, but you should ce
 
 Inspired by [Troy Kelly](https://hub.docker.com/r/really/nginx-modsecurity)
 
-[![Docker Automated build](https://img.shields.io/docker/cloud/automated/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
-[![Docker Build Status](https://img.shields.io/docker/cloud/build/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
+[![Docker Automated build](https://img.shields.io/docker/cloud/automated/vlche/nginx-waf.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf/) 
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/vlche/nginx-waf.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf/) 
 [![GitHub issues](https://img.shields.io/github/issues/vlche/docker-nginx-waf.svg?style=for-the-badge)](https://github.com/vlche/docker-nginx-waf/issues) 
 [![GitHub license](https://img.shields.io/github/license/vlche/docker-nginx-waf.svg?style=for-the-badge)](https://github.com/vlche/docker-nginx-waf/blob/master/LICENSE) 
-[![Docker Pulls](https://img.shields.io/docker/pulls/vlche/nginx-waf-certbot.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/) 
-[![MicroBadger Size](https://img.shields.io/docker/image-size/vlche/nginx-waf-certbot/latest.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf-certbot/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/vlche/nginx-waf.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf/) 
+[![MicroBadger Size](https://img.shields.io/docker/image-size/vlche/nginx-waf/latest.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf/)
 
 Launch nginx-waf using the default config:
 ```
@@ -34,7 +34,7 @@ docker run --name nginx-waf \
   -v /data/letsencrypt:/etc/letsencrypt:rw \
   -v /data/www:/www:rw \
   -p 80:80 -p 443:443 -d \
-  vlche/nginx-waf-certbot
+  vlche/nginx-waf
 ```
 Launch certbot's cron updater as a separate service. Change WAF_INSTANCE variable to match your nginx-waf instance
 ```
@@ -46,7 +46,7 @@ docker run --name nginx-waf-cron \
   -v /data/letsencrypt:/etc/letsencrypt:rw \
   -v /data/www:/www:rw \
   -v /run/docker.sock:/run/docker.sock \
-  vlche/nginx-waf-certbot
+  vlche/nginx-waf
   /cron.sh
 ```
 
