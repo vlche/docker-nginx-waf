@@ -1,6 +1,6 @@
 # vlche/nginx-waf
-Docker alpine based container providing [nginx](https://www.nginx.com) with [modsecurity](https://www.modsecurity.org) and certbot for [Let's Encrypt](https://letsencrypt.org)'s SSL certificates.
-You can use  as all-in-one service, or as SSL/Load-Balancer in frontend and WAF as a backend/backends.
+Docker alpine based container providing [nginx](https://www.nginx.com) with [modsecurity3](https://www.modsecurity.org), [brotli](https://github.com/google/brotli) compression and certbot for [Let's Encrypt](https://letsencrypt.org)'s SSL certificates auto-renewal.
+You can use it as all-in-one service, or as a SSL/Load-Balancer frontend and WAF backend/backends.
 Additionally preconfigured options are:
 
 [SSL/TLS](https://ssl-config.mozilla.org/) 
@@ -14,8 +14,6 @@ Default preconfigured options for Brotli are: dynamic compression, level 6
 Preconfigured optimized http headers are included and enabled, but you should certainly know what you are doing!
 
 [lua](https://www.nginx.com/resources/wiki/modules/lua/) 
-
-Inspired by [Troy Kelly](https://hub.docker.com/r/really/nginx-modsecurity)
 
 [![Docker Automated build](https://img.shields.io/docker/cloud/automated/vlche/nginx-waf.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf/) 
 [![Docker Build Status](https://img.shields.io/docker/cloud/build/vlche/nginx-waf.svg?style=for-the-badge)](https://hub.docker.com/r/vlche/nginx-waf/) 
@@ -36,7 +34,16 @@ docker run --name nginx-waf \
   -p 80:80 -p 443:443 -d \
   vlche/nginx-waf
 ```
-Launch certbot's cron updater as a separate service. Change WAF_INSTANCE variable to match your nginx-waf instance
+Certbot's autoupdater can be run as an embedded cron daemon or as a separate cron container.
+To run it embedded just set CRON variable:
+```
+docker run --name nginx-waf \
+...
+  -e CRON=1 \
+...
+  vlche/nginx-waf
+```
+To run certbot's cron updater as a separate container set WAF_INSTANCE variable to match your nginx-waf instance:
 ```
 docker run --name nginx-waf-cron \
   --restart=always \
