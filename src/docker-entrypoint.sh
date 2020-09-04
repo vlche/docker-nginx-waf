@@ -44,6 +44,10 @@ if [ ! -z "${CRON}" ]; then
   fi
 fi
 
+if [ ! -z "${WORKERS}" ]; then
+  sed -i "s/worker_processes\s*\d\+;/worker_processes ${WORKERS};/" /etc/nginx/nginx.conf
+fi
+
 if [ "$1" = "nginx" -o "$1" = "nginx-debug" ]; then
     if /usr/bin/find "/docker-entrypoint.d/" -mindepth 1 -maxdepth 1 -type f -print -quit 2>/dev/null | read v; then
         echo >&3 "$0: /docker-entrypoint.d/ is not empty, will attempt to perform configuration"
