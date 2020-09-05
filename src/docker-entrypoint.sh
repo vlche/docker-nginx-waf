@@ -39,9 +39,22 @@ if [ -f "/etc/nginx/snippets/resolver.conf" ]; then
 fi
 
 if [ ! -z "${CRON}" ]; then
-  if [ -f "/usr/sbin/crond" ]; then
-    /usr/sbin/crond -b -S -l 2
-  fi
+    if [ -f "/usr/sbin/crond" ]; then
+        /usr/sbin/crond -b -S -l 2
+    fi
+    # fix of certbot's deploy hook
+    if [ ! -d /etc/letsencrypt/renewal-hooks/deploy ]; then
+        mkdir -p /etc/letsencrypt/renewal-hooks/deploy
+    else
+        rm -rf /etc/letsencrypt/renewal-hooks/deploy/*
+    fi
+
+    cat <<EOF >/etc/letsencrypt/renewal-hooks/deploy/nginx-reload
+#!/bin/sh
+
+/sbin/service nginx reload
+EOF
+    chmod a+x /etc/letsencrypt/renewal-hooks/deploy/nginx-reload
 fi
 
 if [ ! -z "${WORKERS}" ]; then
