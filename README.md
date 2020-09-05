@@ -35,10 +35,11 @@ docker run --name nginx-waf \
   -p 80:80 -p 443:443 -d \
   vlche/nginx-waf
 ```
-Env variable CRON starts cron embedded.
-Env variable TZ sets your timezone.
-Env variable WAF_INSTANCE points cron notify target to WAF instance
-Env variable WORKERS sets nginx's worker_processes to your value.
+- Env variable CRON starts cron embedded.
+- Env variable TZ sets your timezone.
+- Env variable WAF_INSTANCE points cron notify target to WAF instance
+- Env variable WORKERS sets nginx's worker_processes to your value.
+
 
 Certbot's autoupdater can be run as an embedded cron daemon or as a separate cron container.
 To run it embedded just set CRON variable:
@@ -49,7 +50,7 @@ docker run --name nginx-waf \
 ...
   vlche/nginx-waf
 ```
-_or_
+__or__
 To run certbot's cron updater as a separate container set WAF_INSTANCE variable to match your nginx-waf instance:
 ```
 docker run --name nginx-waf-cron \
@@ -190,7 +191,7 @@ Certbot
 Easily add SSL security to your nginx hosts with certbot.
 `docker exec -it nginx-waf /bin/sh` will bring up a prompt at which time you can `certbot` to your hearts content.
 
-_or_
+__or__
 
 `docker exec -it nginx-waf certbot --no-redirect --must-staple -d example.com`
 
