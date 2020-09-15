@@ -26,6 +26,11 @@ if [ -d /etc/letsencrypt/live ]; then
     chmod g+r /etc/letsencrypt/live/*/privkey.pem
 fi
 
+# check for Let's Encrypt's shared check dir
+if [ ! -d /etc/letsencrypt/html ]; then
+    mkdir -p /etc/letsencrypt/html
+fi
+
 if [ ! -z "${TZ}" ]; then
     if [ -f /usr/share/zoneinfo/${TZ} ]; then
         if [ -f /etc/localtime ]; then rm -f /etc/localtime; fi

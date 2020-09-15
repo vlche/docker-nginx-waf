@@ -12,6 +12,10 @@ else
     rm -rf /etc/letsencrypt/renewal-hooks/deploy/*
 fi
 
+if [ ! -d /etc/letsencrypt/html ]; then
+    mkdir -p /etc/letsencrypt/html
+fi
+
 cat <<EOF >/etc/letsencrypt/renewal-hooks/deploy/nginx-reload
 #!/bin/sh
 
