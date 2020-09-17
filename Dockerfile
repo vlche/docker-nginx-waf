@@ -162,7 +162,8 @@ RUN export WORKING_DIR="/src" && \
   apk add --no-cache py3-pip py3-cffi py3-cryptography && \
   pip3 install --no-cache-dir certbot-nginx && \
   echo -e "#!/usr/bin/env sh\n\nif [ -f "/usr/bin/certbot" ]; then\n  /usr/bin/certbot renew\nfi\n" > /etc/periodic/daily/certrenew && \
-  chmod 755 /etc/periodic/daily/certrenew
+  chmod 755 /etc/periodic/daily/certrenew && \
+  ln -s /etc/letsencrypt/html/.well-known /usr/share/nginx/html/
 
 #COPY nginx.conf /etc/nginx/nginx.conf
 #COPY default.conf /etc/nginx/conf.d/default.conf

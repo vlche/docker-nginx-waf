@@ -16,6 +16,10 @@ if [ ! -d /etc/letsencrypt/html ]; then
     mkdir -p /etc/letsencrypt/html
 fi
 
+if [ ! -d /etc/letsencrypt/html/.well-known ]; then
+    mkdir -p /etc/letsencrypt/html/.well-known
+fi
+
 cat <<EOF >/etc/letsencrypt/renewal-hooks/deploy/nginx-reload
 #!/bin/sh
 

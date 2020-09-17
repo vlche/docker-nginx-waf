@@ -31,6 +31,10 @@ if [ ! -d /etc/letsencrypt/html ]; then
     mkdir -p /etc/letsencrypt/html
 fi
 
+if [ ! -d /etc/letsencrypt/html/.well-known ]; then
+    mkdir -p /etc/letsencrypt/html/.well-known
+fi
+
 if [ ! -z "${TZ}" ]; then
     if [ -f /usr/share/zoneinfo/${TZ} ]; then
         if [ -f /etc/localtime ]; then rm -f /etc/localtime; fi
