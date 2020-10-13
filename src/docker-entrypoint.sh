@@ -14,7 +14,7 @@ if [ ! -f "/etc/ssl/dhparam.pem" ]; then
   RES=$?
   # curl returned error, generate dhparams ourselves
   if [ ${RES} -ne 0 ];then /usr/bin/openssl dhparam -out /etc/ssl/dhparam.pem 2048 ;fi
-  unset ${RES}
+  unset RES
   echo "Done"
 fi
 
