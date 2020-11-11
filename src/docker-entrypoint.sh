@@ -20,7 +20,7 @@ fi
 
 # fix Let's Encrypt's key files permissions
 if [ -d /etc/letsencrypt/live ]; then
-    chmod o+rx /etc/letsencrypt/archive
+    [ -d /etc/letsencrypt/archive ] && chmod o+rx /etc/letsencrypt/archive
     chmod o+rx /etc/letsencrypt/live
     chown .nginx /etc/letsencrypt/live/*/privkey.pem
     chmod g+r /etc/letsencrypt/live/*/privkey.pem
