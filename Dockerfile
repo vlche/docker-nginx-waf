@@ -3,7 +3,7 @@ FROM nginx:alpine
 MAINTAINER Vladimir Che <vl.che@ncube.cloud>
 
 # nginx:alpine contains NGINX_VERSION environment variable, like so:
-# ENV NGINX_VERSION 1.19.5
+# ENV NGINX_VERSION 1.19.6
 
 # MODSECURITY version
 ENV VERSION=${NGINX_VERSION} \
