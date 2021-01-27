@@ -159,7 +159,7 @@ RUN export WORKING_DIR="/src" && \
   apk add --no-cache libstdc++ yajl libmaxminddb luajit openssl && \
   #
   echo "installing certbot..." && \
-  apk add --no-cache py3-pip py3-cffi py3-cryptography && \
+  apk add --no-cache py3-pip py3-cffi py3-openssl py3-cryptography && \
   pip3 install --no-cache-dir certbot-nginx && \
   echo -e "#!/usr/bin/env sh\n\nif [ -f "/usr/bin/certbot" ]; then\n  /usr/bin/certbot renew\nfi\n" > /etc/periodic/daily/certrenew && \
   chmod 755 /etc/periodic/daily/certrenew && \
